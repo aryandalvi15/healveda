@@ -1,26 +1,191 @@
+@layer theme, base, clerk, components, utilities;
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* HeartPage.css */
+.container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.left-content {
+  width: 50%;
+  padding: 40px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.left-content h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.left-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.right-content {
+  width: 50%;
+  position: relative;
+}
+
+.right-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.overlay-top,
+.overlay-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: white;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.overlay-top {
+  top: 0;
+}
+
+.overlay-bottom {
+  bottom: 0;
+}
+
+@keyframes gradient-scroll {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utility class for using the animation */
+.animate-gradient-scroll {
+  animation-name: gradient-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* ----- ROYAL EMERALD GREEN CLERK THEME ----- */
+
+/* Base Dialogs — Sign in, Sign up, Manage Account */
+.cl-modal,
+.cl-userProfile-root,
+.cl-userProfile-modal,
+.cl-card,
+.cl-component {
+  background: radial-gradient(circle at top left, rgba(0, 45, 25, 0.95), rgba(0, 20, 10, 0.95)) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  border-radius: 1rem !important;
+  box-shadow:
+    0 0 25px rgba(16, 185, 129, 0.25),
+    inset 0 0 25px rgba(6, 95, 70, 0.3),
+    0 0 45px rgba(0, 255, 153, 0.15) !important;
+  backdrop-filter: blur(25px) !important;
+  color: #eafff5 !important;
+  animation: emeraldGlow 5s ease-in-out infinite alternate;
+}
+
+/* Emerald glow animation */
+@keyframes emeraldGlow {
+  0% {
+    box-shadow:
+      0 0 20px rgba(16, 185, 129, 0.25),
+      inset 0 0 15px rgba(6, 95, 70, 0.2);
+  }
+  100% {
+    box-shadow:
+      0 0 35px rgba(0, 255, 153, 0.35),
+      inset 0 0 25px rgba(6, 95, 70, 0.3);
+  }
+}
+
+/* Input fields */
+.cl-input {
+  background-color: rgba(3, 37, 23, 0.85) !important;
+  border: 1px solid rgba(52, 211, 153, 0.4) !important;
+  color: #eafff5 !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.cl-input:focus {
+  border-color: #00ff99 !important;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+}
+
+/* Buttons */
+.cl-button {
+  background: linear-gradient(to right, #064e3b, #059669, #10b981) !important;
+  color: #eafff5 !important;
+  font-weight: 600 !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid rgba(0, 255, 153, 0.2) !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+}
+
+/* Google / Apple social buttons */
+.cl-socialButtonsBlockButton,
+.cl-socialButtonsBlockButton__google,
+.cl-socialButtonsBlockButton__apple {
+  background: #eafff5 !important;
+  color: #003322 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 0.75rem;
+  font-weight: 600;
+}
+
+/* Header text */
+.cl-headerTitle,
+.cl-headerSubtitle {
+  color: #6ee7b7 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+/* Links */
+.cl-link {
+  color: #34d399 !important;
+  font-weight: 500 !important;
+}
+
+/* Divider (e.g., “or continue with”) */
+.cl-dividerLine {
+  border-color: rgba(52, 211, 153, 0.3) !important;
+}
+
+/* Manage account sections */
+.cl-userButton-popover,
+.cl-userProfile-page,
+.cl-userProfile-section,
+.cl-userButton-root {
+  background: rgba(0, 30, 15, 0.95) !important;
+  border-radius: 1rem !important;
+  border: 1px solid rgba(52, 211, 153, 0.3) !important;
+  color: #eafff5 !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Popover buttons (sign out, manage account) */
+.cl-userButton-popoverActionButton {
+  color: #eafff5 !important;
+  background: linear-gradient(to right, #064e3b, #059669, #10b981) !important;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  border-radius: 0.75rem;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.25);
 }
