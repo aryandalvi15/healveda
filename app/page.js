@@ -1,4 +1,7 @@
-import LandingPage from '@/pages/LandingPage';
+'use client';
+export const dynamic = 'force-dynamic';
+
+import LandingPage from '@/app/landingpage/LandingPage';
 import Branding from '@/pages/Branding';
 import Features from '@/app/features/page';
 import About from '@/app/about/page';

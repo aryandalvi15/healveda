@@ -2,7 +2,6 @@ import React from 'react';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
-
 import './globals.css';
 
 const geistSans = Geist({
@@ -17,28 +16,28 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-      suppressHydrationWarning
+    <ClerkProvider
+      appearance={{
+        elements: {
+          card: 'glass-card glow-border',
+          formFieldInput: 'themed-input',
+          formButtonPrimary: 'primary-btn',
+        },
+        variables: {
+          colorPrimary: '#10b981', // Emerald Green (royal style)
+          colorBackground: '#0a0a0a',
+          colorText: '#ffffff',
+          borderRadius: '1rem',
+          fontFamily: 'Poppins, sans-serif',
+        },
+      }}
     >
-      <body className="antialiased" suppressHydrationWarning>
-        <ClerkProvider
-          appearance={{
-            elements: {
-              card: 'glass-card glow-border',
-              formFieldInput: 'themed-input',
-              formButtonPrimary: 'primary-btn',
-            },
-            variables: {
-              colorPrimary: '#10b981', // emerald theme
-              colorBackground: '#0a0a0a', // dark gradient base
-              colorText: '#ffffff',
-              borderRadius: '1rem',
-              fontFamily: 'Poppins, sans-serif',
-            },
-          }}
-        >
+      <html
+        lang="en"
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        suppressHydrationWarning
+      >
+        <body className="antialiased" suppressHydrationWarning>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -47,8 +46,8 @@ export default function RootLayout({ children }) {
           >
             {children}
           </ThemeProvider>
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
