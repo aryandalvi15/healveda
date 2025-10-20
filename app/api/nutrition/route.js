@@ -110,36 +110,23 @@ You are a professional clinical nutritionist. Based on this user profile, provid
     }
 
     // 🧾 Parse API response safely
-    const rawText = await apiResponse.text();
-    console.log('🔍 Response status:', apiResponse.status);
-    console.log(
-      '🔍 Response headers:',
-      Object.fromEntries(apiResponse.headers)
-    );
-    console.log('🔍 First 500 chars of response:', rawText.substring(0, 500));
-
     let data;
     try {
-      data = JSON.parse(rawText);
+      if (
+        apiResponse.headers.get('content-type')?.includes('application/json')
+      ) {
+        data = await apiResponse.json();
+      } else {
+        const rawText = await apiResponse.text();
+        console.warn('⚠️ Response is not JSON, using raw text');
+        data = { candidates: [{ content: { parts: [{ text: rawText }] } }] };
+      }
     } catch (err) {
-      console.error(
-        '❌ Could not parse JSON. Response starts with:',
-        rawText.substring(0, 100)
-      );
+      console.error('❌ Could not parse API response:', err.message);
       return NextResponse.json(
         {
-          error: 'Invalid response from AI service. Check server logs.',
-          details: rawText.substring(0, 200),
+          error: 'Invalid response from AI service.',
         },
-        { status: 500 }
-      );
-    }
-
-    // Check for API errors
-    if (data?.error) {
-      console.error('❌ Gemini API Error:', data.error);
-      return NextResponse.json(
-        { error: data.error.message || 'AI service error.' },
         { status: 500 }
       );
     }
