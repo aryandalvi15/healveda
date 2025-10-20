@@ -189,3 +189,28 @@ html {
   border-radius: 0.75rem;
   box-shadow: 0 0 15px rgba(0, 255, 153, 0.25);
 }
+
+
+/* globals.css */
+.prose-invert h3 {
+  color: #34d399;
+  margin-top: 1.5rem;
+  font-weight: 700;
+}
+
+.prose-invert strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.prose-invert table {
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.prose-invert th {
+  background-color: rgba(16, 185, 129, 0.1);
+  font-weight: 600;
+  color: #34d399;
+}

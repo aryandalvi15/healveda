@@ -1,6 +1,21 @@
-import React from 'react'
+'use client';
+import React, { useState, useEffect } from 'react'
 
 const HeartSvg = () => {
+  const [particles, setParticles] = useState([]);
+
+  // Generate particles only on the client after mount
+  useEffect(() => {
+    const newParticles = [...Array(20)].map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: Math.random() * 4,
+      animationDuration: 3 + Math.random() * 4
+    }));
+    setParticles(newParticles);
+  }, []);
+
   return (
     <section className="flex h-screen relative overflow-hidden">
       {/* Animated background effects */}
@@ -8,15 +23,15 @@ const HeartSvg = () => {
       
       {/* Floating particles animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle) => (
           <div
-            key={i}
+            key={particle.id}
             className={`absolute w-1 h-1 bg-emerald-400/30 rounded-full animate-pulse`}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${3 + Math.random() * 4}s`
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              animationDelay: `${particle.animationDelay}s`,
+              animationDuration: `${particle.animationDuration}s`
             }}
           ></div>
         ))}
