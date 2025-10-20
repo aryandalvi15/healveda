@@ -72,7 +72,7 @@ export default function Navbar() {
                   </button>
                 </Link>
 
-                {/* Health Profile Button */}
+                {/* Health Profile Button
                 <Link href="/profile">
                   <button className="group relative flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-slate-800/60 to-slate-700/60 hover:from-teal-600/20 hover:to-emerald-600/20 backdrop-blur-sm rounded-xl border border-teal-500/30 hover:border-teal-400/50 transition-all duration-300 text-gray-300 hover:text-teal-300 shadow-lg hover:shadow-teal-500/10">
                     <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ export default function Navbar() {
                     <span className="text-sm font-medium">Health Profile</span>
                     <div className="absolute inset-0 rounded-xl bg-teal-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
                   </button>
-                </Link>
+                </Link> */}
 
                 {/* Enhanced User Button Container */}
                 <div className="relative">
