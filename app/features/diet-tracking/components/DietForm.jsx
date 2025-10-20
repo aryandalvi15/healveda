@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 
 export default function DietForm({ onAnalyze, loading }) {
@@ -7,12 +6,23 @@ export default function DietForm({ onAnalyze, loading }) {
     name: '',
     age: '',
     gender: '',
-    meals: '',
-    activityLevel: '',
+    weight: '',
+    height: '',
     goal: '',
+    activityLevel: '',
+    meals: ['', '', ''],
   });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleMealChange = (index, value) => {
+    const updatedMeals = [...form.meals];
+    updatedMeals[index] = value;
+    setForm({ ...form, meals: updatedMeals });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onAnalyze(form);
@@ -20,23 +30,29 @@ export default function DietForm({ onAnalyze, loading }) {
 
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      {['name', 'age', 'meals'].map((field) => (
+      {['name', 'age', 'weight', 'height'].map((field) => (
         <div key={field}>
           <label className="block text-gray-300 mb-2 capitalize">{field}</label>
           <input
-            type={field === 'age' ? 'number' : 'text'}
+            type={['age', 'weight', 'height'].includes(field) ? 'number' : 'text'}
             name={field}
             value={form[field]}
             onChange={handleChange}
-            className="w-full p-3 bg-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-white"
-            placeholder={field === 'meals' ? 'e.g. oats, salad, paneer curry, rice, milk' : ''}
+            className="w-full p-3 bg-slate-800 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none"
+            required
           />
         </div>
       ))}
 
       <div>
         <label className="block text-gray-300 mb-2">Gender</label>
-        <select name="gender" value={form.gender} onChange={handleChange} className="w-full p-3 bg-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+        <select
+          name="gender"
+          value={form.gender}
+          onChange={handleChange}
+          className="w-full p-3 bg-slate-800 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none"
+          required
+        >
           <option value="">Select</option>
           <option>Male</option>
           <option>Female</option>
@@ -46,7 +62,13 @@ export default function DietForm({ onAnalyze, loading }) {
 
       <div>
         <label className="block text-gray-300 mb-2">Activity Level</label>
-        <select name="activityLevel" value={form.activityLevel} onChange={handleChange} className="w-full p-3 bg-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+        <select
+          name="activityLevel"
+          value={form.activityLevel}
+          onChange={handleChange}
+          className="w-full p-3 bg-slate-800 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none"
+          required
+        >
           <option value="">Select</option>
           <option>Sedentary</option>
           <option>Lightly Active</option>
@@ -57,12 +79,32 @@ export default function DietForm({ onAnalyze, loading }) {
 
       <div className="sm:col-span-2">
         <label className="block text-gray-300 mb-2">Goal</label>
-        <select name="goal" value={form.goal} onChange={handleChange} className="w-full p-3 bg-slate-800 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+        <select
+          name="goal"
+          value={form.goal}
+          onChange={handleChange}
+          className="w-full p-3 bg-slate-800 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none"
+          required
+        >
           <option value="">Select</option>
           <option>Lose Weight</option>
           <option>Maintain Weight</option>
           <option>Gain Weight</option>
         </select>
+      </div>
+
+      <div className="sm:col-span-2 space-y-3">
+        <label className="block text-gray-300 mb-2">Meals (enter your meals for the day)</label>
+        {form.meals.map((meal, i) => (
+          <input
+            key={i}
+            type="text"
+            placeholder={`Meal ${i + 1}`}
+            value={meal}
+            onChange={(e) => handleMealChange(i, e.target.value)}
+            className="w-full p-3 bg-slate-800 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none"
+          />
+        ))}
       </div>
 
       <div className="sm:col-span-2 flex justify-center">
@@ -71,7 +113,7 @@ export default function DietForm({ onAnalyze, loading }) {
           disabled={loading}
           className="px-8 py-3 bg-emerald-600 hover:bg-emerald-700 transition-all duration-200 rounded-xl font-semibold text-white shadow-lg hover:shadow-emerald-500/20 disabled:opacity-50"
         >
-          {loading ? 'Analyzing…' : 'Analyze My Diet'}
+          {loading ? 'Analyzing…' : 'Generate Diet Report'}
         </button>
       </div>
     </form>

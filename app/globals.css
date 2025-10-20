@@ -214,3 +214,8 @@ html {
   font-weight: 600;
   color: #34d399;
 }
+
+
+.input-field {
+    @apply bg-slate-800/60 text-gray-200 px-4 py-2 rounded-lg border border-slate-700 focus:border-emerald-500 focus:ring-emerald-500 outline-none transition-all;
+  }
